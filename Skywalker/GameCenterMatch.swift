@@ -44,16 +44,13 @@ class GameCenterMatch: Match {
     }
     
     func update(turnBasedMatch: GKTurnBasedMatch) {
-//        let maxTimeInterval = self.actions.keys.max() ?? 0
-//        let updatedActions = ActionsFrom(matchData: turnBasedMatch.matchData ?? Data())
-//        let newActions = updatedActions.filter { (key, _) in key > maxTimeInterval }
-//        newActions.forEach { (key, value) in
-//            self.game.add(action: value)
-//            self.add(action: value, atTimeInterval: key)
-//        }
+        let maxTimeInterval = self.actions.map { $0.timeInterval }.max() ?? 0
+        let updatedActions = ActionsFrom(matchData: turnBasedMatch.matchData ?? Data())
+        let newActions = updatedActions.filter { $0.timeInterval > maxTimeInterval }
+        self.turnBasedMatch = turnBasedMatch
+        self.actions = updatedActions
+        self.game.add(actions: newActions)
         // update the players
-        // update the instance
-        // run the actions received on the game
     }
     
     func nextParticipantArray(nextPlayerIndex: Int) -> [GKTurnBasedParticipant] {

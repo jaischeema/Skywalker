@@ -65,15 +65,10 @@ class Game {
     let match: Match
     var state: GameState
     
-    var currentPlayer: Player? {
-        guard let index = state.currentPlayerIndex else { return nil }
-        return self.players[index]
-    }
-    
     var actions: [Action] = []
     var hasUnprocessedAction: Bool { return self.actions.count > 0 }
     
-    // Match delegates
+    // Methods delegated to Match
     var players: [Player] { return match.players }
     var localPlayerIdentifier: String { return match.localPlayerIdentifier }
     var isServer: Bool { return match.isLocalPlayerActive }
@@ -120,6 +115,10 @@ class Game {
     
     func add(action: Action) {
         self.actions.append(action)
+    }
+    
+    func add(actions: [Action]) {
+        self.actions.append(contentsOf: actions)
     }
     
     func nextPlayer() -> Int? {
