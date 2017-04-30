@@ -45,32 +45,33 @@ class StartGame: Action {
     }
 }
 
-class SetCurrentPlayer: Action {
-    let playerIdentifier: String
+class PlayerIndexAction: Action {
+    let playerIndex: Int
     
-    init(timeInterval: TimeInterval, playerIdentifier: String) {
-        self.playerIdentifier = playerIdentifier
+    init(timeInterval: TimeInterval, playerIndex: Int) {
+        self.playerIndex = playerIndex
         super.init(timeInterval: timeInterval)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        guard let identifier = aDecoder.decodeObject(forKey: "identifier") as? String else { return nil }
-        self.playerIdentifier = identifier
+        self.playerIndex = aDecoder.decodeInteger(forKey: "playerIndex")
         super.init(coder: aDecoder)
     }
     
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
-        aCoder.encode(playerIdentifier, forKey: "identifier")
+        aCoder.encode(playerIndex, forKey: "playerIndex")
     }
-    
+}
+
+class SetCurrentPlayer: PlayerIndexAction {
     override var description: String {
-        return "SetCurrentPlayer: \(playerIdentifier)"
+        return "SetCurrentPlayer: \(playerIndex)"
     }
     
     override func applyTo(gameState: GameState) -> GameState {
         var newGameState = gameState
-        newGameState.currentPlayerIdentifier = playerIdentifier
+        newGameState.currentPlayerIndex = playerIndex
         newGameState.status = .awaitingPlay
         return newGameState
     }
@@ -101,41 +102,23 @@ class ChoiceAction: Action {
     }
     
     override func applyTo(gameState: GameState) -> GameState {
-        guard let identifier = gameState.currentPlayerIdentifier else { return gameState }
+        guard let index = gameState.currentPlayerIndex else { return gameState }
         var newGameState = gameState
-        newGameState.playerChoices[identifier] = value
+        newGameState.playerChoices[index] = value
         newGameState.status = .turnComplete
         return newGameState
     }
 }
 
-class SetWinner: Action {
-    let playerIdentifier: String
-    
-    init(timeInterval: TimeInterval, playerIdentifier: String) {
-        self.playerIdentifier = playerIdentifier
-        super.init(timeInterval: timeInterval)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        guard let identifier = aDecoder.decodeObject(forKey: "identifier") as? String else { return nil }
-        self.playerIdentifier = identifier
-        super.init(coder: aDecoder)
-    }
-    
-    override func encode(with aCoder: NSCoder) {
-        super.encode(with: aCoder)
-        aCoder.encode(playerIdentifier, forKey: "identifier")
-    }
-    
+class SetWinner: PlayerIndexAction {
     override var description: String {
-        return "SetWinner: \(playerIdentifier)"
+        return "SetWinner: \(playerIndex)"
     }
     
     override func applyTo(gameState: GameState) -> GameState {
         var newGameState = gameState
-        newGameState.currentPlayerIdentifier = nil
-        newGameState.status = .finished(winner: playerIdentifier)
+        newGameState.currentPlayerIndex = nil
+        newGameState.status = .finished(winner: playerIndex)
         return newGameState
     }
 }

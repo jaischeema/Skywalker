@@ -44,7 +44,7 @@ class Match {
     let identifier: String
     let localPlayerIdentifier: String
    
-    var currentPlayer: Player? { return nil }
+    var currentPlayerIndex: Int? { return nil }
     
     private(set) var status: MatchStatus
     
@@ -56,7 +56,8 @@ class Match {
     }
     
     var isLocalPlayerActive: Bool {
-        return localPlayerIdentifier == self.currentPlayer?.identifier
+        guard let currentIndex = self.currentPlayerIndex else { return false }
+        return localPlayerIdentifier == self.players[currentIndex].identifier
     }
     
     private var _game: Game?
@@ -76,10 +77,10 @@ class Match {
         NotificationCenter.default.addObserver(self, selector: #selector(handleGameEvent), name: GameNotificationName, object: nil)
     }
     
-    func saveTurnWith(nextPlayer: Player?) {
+    func saveTurn(nextPlayerIndex: Int? = nil) {
     }
     
-    func endMatch(winner: Player) {
+    func endMatch(winnerIndex: Int) {
     }
     
     func playerFor(identifier: String) -> Player? {
@@ -94,15 +95,15 @@ class Match {
             
             switch action {
             case let currentAction as SetCurrentPlayer:
-                if self.currentPlayer?.identifier != currentAction.playerIdentifier {
-                    self.saveTurnWith(nextPlayer: playerFor(identifier: currentAction.playerIdentifier))
+                if self.currentPlayerIndex != currentAction.playerIndex {
+                    self.saveTurn(nextPlayerIndex: currentAction.playerIndex)
                 } else {
-                    self.saveTurnWith(nextPlayer: nil)
+                    self.saveTurn()
                 }
             case let currentAction as SetWinner:
-                self.endMatch(winner: playerFor(identifier: currentAction.playerIdentifier)!)
+                self.endMatch(winnerIndex: currentAction.playerIndex)
             default:
-                self.saveTurnWith(nextPlayer: nil)
+                self.saveTurn()
             }
         }
     }

@@ -12,10 +12,9 @@ import GameKit
 class GameCenterMatch: Match {
     private(set) var turnBasedMatch: GKTurnBasedMatch
     
-    override var currentPlayer: Player? {
+    override var currentPlayerIndex: Int? {
         guard let currentParticipant = self.turnBasedMatch.currentParticipant else { return nil }
-        guard let index = self.turnBasedMatch.participants!.index(of: currentParticipant) else { return nil }
-        return self.players[index]
+        return self.turnBasedMatch.participants!.index(of: currentParticipant)
     }
     
     init(turnBasedMatch: GKTurnBasedMatch) {
@@ -28,22 +27,18 @@ class GameCenterMatch: Match {
                    matchData: turnBasedMatch.matchData)
     }
     
-    override func saveTurnWith(nextPlayer: Player?) {
-        if let nextPlayer = nextPlayer {
-            let nextParticipants = nextParticipantArray(nextPlayerIdentifier: nextPlayer.identifier)
+    override func saveTurn(nextPlayerIndex: Int?) {
+        if let index = nextPlayerIndex {
+            let nextParticipants = nextParticipantArray(nextPlayerIndex: index)
             self.turnBasedMatch.endTurn(withNextParticipants: nextParticipants, turnTimeout: 0, match: matchData, completionHandler: nil)
         } else {
             self.turnBasedMatch.saveCurrentTurn(withMatch: matchData, completionHandler: nil)
         }
     }
     
-    override func endMatch(winner: Player) {
-        self.turnBasedMatch.participants?.forEach { participant in
-            if participant.player?.playerID == winner.identifier  {
-                participant.matchOutcome = .won
-            } else {
-                participant.matchOutcome = .lost
-            }
+    override func endMatch(winnerIndex: Int) {
+        for (index, participant) in (self.turnBasedMatch.participants ?? []).enumerated() {
+            participant.matchOutcome = (index == winnerIndex) ? .won : .lost
         }
         self.turnBasedMatch.endMatchInTurn(withMatch: matchData, completionHandler: nil)
     }
@@ -61,9 +56,8 @@ class GameCenterMatch: Match {
         // run the actions received on the game
     }
     
-    func nextParticipantArray(nextPlayerIdentifier: String) -> [GKTurnBasedParticipant] {
+    func nextParticipantArray(nextPlayerIndex: Int) -> [GKTurnBasedParticipant] {
         let participants = self.turnBasedMatch.participants ?? []
-        let index = self.players.index { $0.identifier == nextPlayerIdentifier } ?? 0
-        return participants.shift(withDistance: index)
+        return participants.shift(withDistance: nextPlayerIndex)
     }
 }

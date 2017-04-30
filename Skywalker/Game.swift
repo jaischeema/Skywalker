@@ -37,7 +37,7 @@ enum GameStatus {
     case awaitingStartingPlayer
     case awaitingPlay
     case turnComplete
-    case finished(winner: String)
+    case finished(winner: Int)
     
     var isFinished: Bool {
         switch self {
@@ -50,12 +50,12 @@ enum GameStatus {
 }
 
 struct GameState {
-    var currentPlayerIdentifier: String?
+    var currentPlayerIndex: Int?
     var status: GameStatus
-    var playerChoices: [String: GameSelection]
+    var playerChoices: [Int: GameSelection]
     
     init() {
-        self.currentPlayerIdentifier = nil
+        self.currentPlayerIndex = nil
         self.status = .notStarted
         self.playerChoices = [:]
     }
@@ -66,8 +66,8 @@ class Game {
     var state: GameState
     
     var currentPlayer: Player? {
-        guard let identifier = state.currentPlayerIdentifier else { return nil }
-        return self.players.first { $0.identifier == identifier }
+        guard let index = state.currentPlayerIndex else { return nil }
+        return self.players[index]
     }
     
     var actions: [Action] = []
@@ -106,14 +106,13 @@ class Game {
         case .notStarted:
             self.add(action: StartGame(timeInterval: currentTime))
         case .awaitingStartingPlayer:
-            self.add(action: SetCurrentPlayer(timeInterval: currentTime, playerIdentifier: self.players.first!.identifier))
+            self.add(action: SetCurrentPlayer(timeInterval: currentTime, playerIndex: 0))
         case .turnComplete:
-            guard let player = self.currentPlayer else { return }
+            guard let nextPlayerIndex = self.nextPlayer() else { return }
             if self.state.playerChoices.count == self.players.count {
-                self.add(action: SetWinner(timeInterval: currentTime, playerIdentifier: player.identifier))
+                self.add(action: SetWinner(timeInterval: currentTime, playerIndex: 1))
             } else {
-                let nextPlayer = self.nextPlayer(player: player)
-                self.add(action: SetCurrentPlayer(timeInterval: currentTime, playerIdentifier: nextPlayer.identifier))
+                self.add(action: SetCurrentPlayer(timeInterval: currentTime, playerIndex: nextPlayerIndex))
             }
         default: break
         }
@@ -123,8 +122,9 @@ class Game {
         self.actions.append(action)
     }
     
-    func nextPlayer(player: Player) -> Player {
-        let index = self.players.index { $0.identifier == player.identifier } ?? 0
-        return players.shift(withDistance: index + 1)[0]
+    func nextPlayer() -> Int? {
+        guard let currentIndex = state.currentPlayerIndex else { return nil }
+        let playerIndexes: [Int] = Array<Int>(0..<players.count)
+        return playerIndexes.shift(withDistance: currentIndex + 1).first
     }
 }
