@@ -21,7 +21,7 @@
 		205D1A871EAED12300D560BD /* GameCenterMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A861EAED12300D560BD /* GameCenterMatch.swift */; };
 		205D1A891EAED13C00D560BD /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A881EAED13C00D560BD /* Game.swift */; };
 		205D1A8B1EAED17100D560BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A8A1EAED17100D560BD /* Extensions.swift */; };
-		20DED2861EB5F9D40007F1B7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 20DED2851EB5F9D40007F1B7 /* README.md */; };
+		20DED2A11EB672380007F1B7 /* LocalMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DED2A01EB672380007F1B7 /* LocalMatch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +42,7 @@
 		205D1A881EAED13C00D560BD /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		205D1A8A1EAED17100D560BD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		20DED2851EB5F9D40007F1B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		20DED2A01EB672380007F1B7 /* LocalMatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalMatch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +90,7 @@
 				205D1A8A1EAED17100D560BD /* Extensions.swift */,
 				203FC4FF1EB5966700D67BDC /* Player.swift */,
 				203FC5011EB5A34A00D67BDC /* GameSelection.swift */,
+				20DED2A01EB672380007F1B7 /* LocalMatch.swift */,
 			);
 			path = Skywalker;
 			sourceTree = "<group>";
@@ -195,10 +197,10 @@
 				203FC5021EB5A34A00D67BDC /* GameSelection.swift in Sources */,
 				205D1A8B1EAED17100D560BD /* Extensions.swift in Sources */,
 				205D1A871EAED12300D560BD /* GameCenterMatch.swift in Sources */,
+				20DED2A11EB672380007F1B7 /* LocalMatch.swift in Sources */,
 				202FD9DC1EAC325D009EBFD9 /* AppDelegate.swift in Sources */,
 				202FD9F91EAC5DE7009EBFD9 /* Action.swift in Sources */,
 				203FC5001EB5966700D67BDC /* Player.swift in Sources */,
-				20DED2861EB5F9D40007F1B7 /* README.md in Sources */,
 				202FD9F51EAC4712009EBFD9 /* Match.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

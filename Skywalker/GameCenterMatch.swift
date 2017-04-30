@@ -17,12 +17,17 @@ class GameCenterMatch: Match {
         return self.turnBasedMatch.participants!.index(of: currentParticipant)
     }
     
+    override var isServer: Bool {
+        guard let currentIndex = self.currentPlayerIndex else { return false }
+        return localPlayerIdentifier == self.players[currentIndex].identifier
+    }
+    
     init(turnBasedMatch: GKTurnBasedMatch) {
         self.turnBasedMatch = turnBasedMatch
         let players = (turnBasedMatch.participants ?? []).map { $0.mPlayer }
         super.init(identifier: turnBasedMatch.matchID ?? RandomIdentifier(),
                    players: players,
-                   localPlayerIdentifier: GKLocalPlayer.localPlayer().playerID ?? players.first!.identifier,
+                   localPlayerIdentifier: GKLocalPlayer.localPlayer().playerID!,
                    matchData: turnBasedMatch.matchData)
     }
     

@@ -47,20 +47,12 @@ enum Result: Int {
 class Match {
     let identifier: String
     let localPlayerIdentifier: String
-   
-    var currentPlayerIndex: Int? { return nil }
-    
     var players: [Player]
     var actions: [Action]
-    
-    var matchData: Data {
-        return NSKeyedArchiver.archivedData(withRootObject: self.actions)
-    }
-    
-    var isLocalPlayerActive: Bool {
-        guard let currentIndex = self.currentPlayerIndex else { return false }
-        return localPlayerIdentifier == self.players[currentIndex].identifier
-    }
+   
+    var currentPlayerIndex: Int? { return nil }
+    var isServer: Bool { return true }
+    var matchData: Data { return NSKeyedArchiver.archivedData(withRootObject: self.actions) }
     
     private var _game: Game?
     var game: Game {
@@ -84,7 +76,6 @@ class Match {
     @objc func handleGameEvent(_ notification: Notification) {
         if let action = notification.object as? Action {
             guard !self.actions.contains(action) else { return }
-            print(action.timeInterval)
             self.actions.append(action)
             
             switch action {

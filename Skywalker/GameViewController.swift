@@ -27,12 +27,12 @@ class GameViewController: UIViewController {
     
     var currentPlayerIsActive: Bool {
         guard let index = self.gameState.currentPlayerIndex else { return false }
-        return GKLocalPlayer.localPlayer().playerID == self.game.players[index].identifier
+        return self.game.localPlayerIdentifier == self.game.players[index].identifier
     }
     
     var currentPlayerIndex: Int {
         for (index, player) in self.game.players.enumerated() {
-            if player.identifier == GKLocalPlayer.localPlayer().playerID {
+            if player.identifier == self.game.localPlayerIdentifier {
                 return index
             }
         }

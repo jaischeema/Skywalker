@@ -41,7 +41,7 @@ class Game {
     // Methods delegated to Match
     var players: [Player] { return match.players }
     var localPlayerIdentifier: String { return match.localPlayerIdentifier }
-    var isServer: Bool { return match.isLocalPlayerActive }
+    var isServer: Bool { return match.isServer }
     
     init(match: Match) {
         self.match = match

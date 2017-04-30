@@ -25,17 +25,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wp2-E5-1Ba">
-                                <rect key="frame" x="150" y="318.5" width="75" height="30"/>
-                                <state key="normal" title="New Game"/>
+                                <rect key="frame" x="105" y="318.5" width="166" height="30"/>
+                                <state key="normal" title="New GameCenter Game"/>
                                 <connections>
                                     <action selector="twoPlayerGame" destination="BYZ-38-t0r" eventType="touchUpInside" id="6iY-Me-SHk"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHO-El-a8i">
+                                <rect key="frame" x="129" y="356" width="116" height="30"/>
+                                <state key="normal" title="New Local Game"/>
+                                <connections>
+                                    <action selector="localGame" destination="BYZ-38-t0r" eventType="touchUpInside" id="sRb-3d-q1O"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bazinga!!!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jj7-sT-ggG">
+                                <rect key="frame" x="118" y="78" width="140" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Jj7-sT-ggG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PjP-fe-7C6"/>
+                            <constraint firstItem="cHO-El-a8i" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VlF-Sa-Uza"/>
+                            <constraint firstItem="cHO-El-a8i" firstAttribute="top" secondItem="wp2-E5-1Ba" secondAttribute="bottom" constant="7.5" id="b8Z-im-d6R"/>
                             <constraint firstItem="wp2-E5-1Ba" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="d75-27-CHq"/>
+                            <constraint firstItem="Jj7-sT-ggG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="58" id="eRs-7U-cm2"/>
                             <constraint firstItem="wp2-E5-1Ba" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gBR-kI-iET"/>
                         </constraints>
                     </view>
@@ -72,24 +89,24 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vi5-6T-XY9">
-                                <rect key="frame" x="16" y="481.5" width="343" height="60.5"/>
+                                <rect key="frame" x="16" y="482" width="343" height="60"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9th-hh-OtX">
-                                        <rect key="frame" x="0.0" y="0.0" width="60.5" height="60.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="60.5" height="60"/>
                                         <state key="normal" image="rock"/>
                                         <connections>
                                             <action selector="runActionWithSender:" destination="O4D-uo-c6K" eventType="touchUpInside" id="qNv-d5-bkC"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FoE-HH-GEc">
-                                        <rect key="frame" x="70.5" y="0.0" width="60.5" height="60.5"/>
+                                        <rect key="frame" x="70.5" y="0.0" width="60.5" height="60"/>
                                         <state key="normal" image="paper"/>
                                         <connections>
                                             <action selector="runActionWithSender:" destination="O4D-uo-c6K" eventType="touchUpInside" id="aPJ-ty-5wv"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yn0-tM-Ijq">
-                                        <rect key="frame" x="141" y="0.0" width="61" height="60.5"/>
+                                        <rect key="frame" x="141" y="0.0" width="61" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="yn0-tM-Ijq" secondAttribute="height" id="UzD-77-7Rl"/>
                                         </constraints>
@@ -99,14 +116,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J6X-WR-52F">
-                                        <rect key="frame" x="212" y="0.0" width="60.5" height="60.5"/>
+                                        <rect key="frame" x="212" y="0.0" width="60.5" height="60"/>
                                         <state key="normal" image="spock"/>
                                         <connections>
                                             <action selector="runActionWithSender:" destination="O4D-uo-c6K" eventType="touchUpInside" id="Ohq-W2-TW4"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pe8-Jk-s8T">
-                                        <rect key="frame" x="282.5" y="0.0" width="60.5" height="60.5"/>
+                                        <rect key="frame" x="282.5" y="0.0" width="60.5" height="60"/>
                                         <state key="normal" image="lizard"/>
                                         <connections>
                                             <action selector="runActionWithSender:" destination="O4D-uo-c6K" eventType="touchUpInside" id="rrO-7G-FFk"/>

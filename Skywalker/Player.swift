@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Player {
+class Player {
     let identifier: String
     let displayName: String
     let isTemp: Bool
@@ -19,9 +19,14 @@ struct Player {
         self.isTemp = isTemp
     }
     
-    init() {
+    convenience init() {
         self.init(identifier: RandomIdentifier(),
                   displayName: "Matching",
                   isTemp: true)
+    }
+    
+    // Only used for the AI Players
+    func takeAction(forState: GameState, index: Int) -> Action? {
+        return nil
     }
 }

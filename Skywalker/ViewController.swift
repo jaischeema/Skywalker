@@ -12,7 +12,7 @@ import GameKit
 class ViewController: UIViewController {
     @IBOutlet weak var twoPlayerButton: UIButton!
     
-    var match: GameCenterMatch?
+    var match: Match?
     
     var isLoggedIn: Bool = false {
         didSet {
@@ -35,6 +35,18 @@ class ViewController: UIViewController {
     
     @IBAction func twoPlayerGame() {
         createMatch(players: 2)
+    }
+    
+    @IBAction func localGame() {
+        let players = [
+            Player(identifier: "local", displayName: "You"),
+            AIPlayer(identifier: "ai1", displayName: "Some Dude"),
+        ]
+        self.match = LocalMatch(identifier: "test",
+                               players: players,
+                               localPlayerIdentifier: "local",
+                               matchData: nil)
+        self.performSegue(withIdentifier: "StartGame", sender: self)
     }
     
     func createMatch(players: Int) {
@@ -76,8 +88,8 @@ extension ViewController: GKLocalPlayerListener {
             }
             return
         }
-        if(match.matchID == currentMatch.identifier) {
-            currentMatch.update(turnBasedMatch: match)
+        if let gameCenterMatch = self.match as? GameCenterMatch, match.matchID == currentMatch.identifier {
+            gameCenterMatch.update(turnBasedMatch: match)
         }
         // How to handle if the match we recevied updates is not the active one
     }
