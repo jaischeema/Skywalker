@@ -28,7 +28,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var updatesView: UITextView!
     
     var currentPlayerIsActive: Bool {
-       return GKLocalPlayer.localPlayer().playerID == self.game.currentPlayer?.identifier
+        guard let index = self.gameState.currentPlayerIndex else { return false }
+        return GKLocalPlayer.localPlayer().playerID == self.game.players[index].identifier
     }
     
     var allActionButtons: [UIButton] {

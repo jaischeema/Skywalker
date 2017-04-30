@@ -112,7 +112,7 @@ class ChoiceAction: Action {
 
 class SetWinner: PlayerIndexAction {
     override var description: String {
-        return "SetWinner: \(playerIndex)"
+        return "Player \(playerIndex) won!!!"
     }
     
     override func applyTo(gameState: GameState) -> GameState {
