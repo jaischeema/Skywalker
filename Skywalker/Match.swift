@@ -9,24 +9,6 @@
 import Foundation
 import GameKit
 
-struct Player {
-    let identifier: String
-    let displayName: String
-    let isTemp: Bool
-    
-    init(identifier: String, displayName: String, isTemp: Bool = false) {
-        self.identifier = identifier
-        self.displayName = displayName
-        self.isTemp = isTemp
-    }
-    
-    init() {
-        self.init(identifier: RandomIdentifier(),
-                  displayName: "Matching",
-                  isTemp: true)
-    }
-}
-
 func ActionsFrom(matchData: Data) -> [Action] {
     guard let actions = NSKeyedUnarchiver.unarchiveObject(with: matchData) as? [Action] else {
         return []
@@ -34,19 +16,11 @@ func ActionsFrom(matchData: Data) -> [Action] {
     return actions
 }
 
-enum MatchStatus {
-    case notStarted
-    case running
-    case finished
-}
-
 class Match {
     let identifier: String
     let localPlayerIdentifier: String
    
     var currentPlayerIndex: Int? { return nil }
-    
-    private(set) var status: MatchStatus
     
     var players: [Player]
     var actions: [Action]
@@ -68,24 +42,16 @@ class Match {
         return _game!
     }
     
-    init(identifier: String, players: [Player], localPlayerIdentifier: String, status: MatchStatus, matchData: Data?) {
+    init(identifier: String, players: [Player], localPlayerIdentifier: String, matchData: Data?) {
         self.identifier = identifier
         self.players = players
         self.localPlayerIdentifier = localPlayerIdentifier
-        self.status = status
         self.actions = ActionsFrom(matchData: matchData ?? Data())
         NotificationCenter.default.addObserver(self, selector: #selector(handleGameEvent), name: GameNotificationName, object: nil)
     }
     
-    func saveTurn(nextPlayerIndex: Int? = nil) {
-    }
-    
-    func endMatch(winnerIndex: Int) {
-    }
-    
-    func playerFor(identifier: String) -> Player? {
-        return self.players.first { $0.identifier == identifier }
-    }
+    func saveTurn(nextPlayerIndex: Int? = nil) {}
+    func endMatch(winnerIndex: Int) {}
     
     @objc func handleGameEvent(_ notification: Notification) {
         if let action = notification.object as? Action {

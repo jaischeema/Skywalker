@@ -23,7 +23,6 @@ class GameCenterMatch: Match {
         super.init(identifier: turnBasedMatch.matchID ?? RandomIdentifier(),
                    players: players,
                    localPlayerIdentifier: GKLocalPlayer.localPlayer().playerID ?? players.first!.identifier,
-                   status: .running,
                    matchData: turnBasedMatch.matchData)
     }
     

@@ -9,8 +9,6 @@
 import Foundation
 import QuartzCore
 
-// state, action
-
 enum GameSelection: Int {
     case rock = 1
     case paper = 2
@@ -30,23 +28,12 @@ enum GameSelection: Int {
     }
 }
 
-let GameNotificationName = Notification.Name(rawValue: "GameNotification")
-
 enum GameStatus {
     case notStarted
     case awaitingStartingPlayer
     case awaitingPlay
     case turnComplete
     case finished(winner: Int)
-    
-    var isFinished: Bool {
-        switch self {
-        case .finished(_):
-            return true
-        default:
-            return false
-        }
-    }
 }
 
 struct GameState {
@@ -60,6 +47,8 @@ struct GameState {
         self.playerChoices = [:]
     }
 }
+
+let GameNotificationName = Notification.Name(rawValue: "GameNotification")
 
 class Game {
     let match: Match
