@@ -8,6 +8,11 @@
 
 import Foundation
 
+let TimeIntervalkey = "t"
+let PlayerIndexKey  = "p"
+let ResultsKey      = "r"
+let ValueKey        = "v"
+
 class Action: NSObject, NSCoding {
     let timeInterval: TimeInterval
     
@@ -17,12 +22,14 @@ class Action: NSObject, NSCoding {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        let timeInterval = aDecoder.decodeDouble(forKey: "timeInterval")
+        let timeInterval = aDecoder.decodeDouble(forKey: TimeIntervalkey)
         self.timeInterval = timeInterval
         super.init()
     }
     
-    func encode(with aCoder: NSCoder) {}
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.timeInterval, forKey: TimeIntervalkey)
+    }
     
     func applyTo(gameState: GameState) -> GameState {
         return gameState
@@ -54,13 +61,13 @@ class PlayerIndexAction: Action {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.playerIndex = aDecoder.decodeInteger(forKey: "playerIndex")
+        self.playerIndex = aDecoder.decodeInteger(forKey: PlayerIndexKey)
         super.init(coder: aDecoder)
     }
     
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
-        aCoder.encode(playerIndex, forKey: "playerIndex")
+        aCoder.encode(playerIndex, forKey: PlayerIndexKey)
     }
 }
 
@@ -86,7 +93,7 @@ class ChoiceAction: Action {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        let intValue = aDecoder.decodeInteger(forKey: "value")
+        let intValue = aDecoder.decodeInteger(forKey: ValueKey)
         guard let selection = GameSelection(rawValue: intValue) else { return nil }
         self.value = selection
         super.init(coder: aDecoder)
@@ -94,7 +101,7 @@ class ChoiceAction: Action {
     
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
-        aCoder.encode(value.rawValue, forKey: "value")
+        aCoder.encode(value.rawValue, forKey: ValueKey)
     }
     
     override var description: String {
@@ -119,7 +126,7 @@ class SetResults: Action {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        guard let rawValues = aDecoder.decodeObject(forKey: "results") as? [[Int]] else { return nil }
+        guard let rawValues = aDecoder.decodeObject(forKey: ResultsKey) as? [[Int]] else { return nil }
         var tempResults: [Int: Result] = [:]
         for rawValue in rawValues {
             guard let key = rawValue.first, let value = rawValue.last else { continue }
@@ -133,7 +140,7 @@ class SetResults: Action {
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
         let rawValue = self.results.map { [$0.key, $0.value.rawValue] }
-        aCoder.encode(rawValue, forKey: "results")
+        aCoder.encode(rawValue, forKey: ResultsKey)
     }
     
     override func applyTo(gameState: GameState) -> GameState {

@@ -21,6 +21,7 @@
 		205D1A871EAED12300D560BD /* GameCenterMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A861EAED12300D560BD /* GameCenterMatch.swift */; };
 		205D1A891EAED13C00D560BD /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A881EAED13C00D560BD /* Game.swift */; };
 		205D1A8B1EAED17100D560BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A8A1EAED17100D560BD /* Extensions.swift */; };
+		20DED2861EB5F9D40007F1B7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 20DED2851EB5F9D40007F1B7 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		205D1A861EAED12300D560BD /* GameCenterMatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterMatch.swift; sourceTree = "<group>"; };
 		205D1A881EAED13C00D560BD /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		205D1A8A1EAED17100D560BD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		20DED2851EB5F9D40007F1B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 		202FD9CF1EAC325D009EBFD9 = {
 			isa = PBXGroup;
 			children = (
+				20DED2851EB5F9D40007F1B7 /* README.md */,
 				202FD9DA1EAC325D009EBFD9 /* Skywalker */,
 				202FD9D91EAC325D009EBFD9 /* Products */,
 				202FD9ED1EAC3283009EBFD9 /* Frameworks */,
@@ -195,6 +198,7 @@
 				202FD9DC1EAC325D009EBFD9 /* AppDelegate.swift in Sources */,
 				202FD9F91EAC5DE7009EBFD9 /* Action.swift in Sources */,
 				203FC5001EB5966700D67BDC /* Player.swift in Sources */,
+				20DED2861EB5F9D40007F1B7 /* README.md in Sources */,
 				202FD9F51EAC4712009EBFD9 /* Match.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
