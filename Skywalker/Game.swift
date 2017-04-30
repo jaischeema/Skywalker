@@ -9,31 +9,12 @@
 import Foundation
 import QuartzCore
 
-enum GameSelection: Int {
-    case rock = 1
-    case paper = 2
-    case scissor = 3
-    case spock = 4
-    case lizard = 5
-    
-    init?(rawStringValue: String) {
-        switch rawStringValue {
-        case "Rock": self = .rock
-        case "Paper": self = .paper
-        case "Scissor": self = .scissor
-        case "Spock": self = .spock
-        case "Lizard": self = .lizard
-        default: return nil
-        }
-    }
-}
-
 enum GameStatus {
     case notStarted
     case awaitingStartingPlayer
     case awaitingPlay
     case turnComplete
-    case finished(winner: Int)
+    case finished(results: [Int: Result])
 }
 
 struct GameState {
@@ -94,7 +75,11 @@ class Game {
         case .turnComplete:
             guard let nextPlayerIndex = self.nextPlayer() else { return }
             if self.state.playerChoices.count == self.players.count {
-                self.add(action: SetWinner(timeInterval: currentTime, playerIndex: 1))
+                guard let firstPlayerSelection = self.state.playerChoices[0],
+                    let secondPlayerSelection = self.state.playerChoices[1] else { return }
+                let result = firstPlayerSelection.compare(against: secondPlayerSelection)
+                let results = [ 0: result, 1: result.opposite ]
+                self.add(action: SetResults(timeInterval: currentTime, results: results))
             } else {
                 self.add(action: SetCurrentPlayer(timeInterval: currentTime, playerIndex: nextPlayerIndex))
             }

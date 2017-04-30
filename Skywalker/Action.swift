@@ -110,15 +110,36 @@ class ChoiceAction: Action {
     }
 }
 
-class SetWinner: PlayerIndexAction {
-    override var description: String {
-        return "Player \(playerIndex) won!!!"
+class SetResults: Action {
+    let results: [Int: Result]
+    
+    init(timeInterval: TimeInterval, results: [Int: Result]) {
+        self.results = results
+        super.init(timeInterval: timeInterval)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        guard let rawValues = aDecoder.decodeObject(forKey: "results") as? [[Int]] else { return nil }
+        var tempResults: [Int: Result] = [:]
+        for rawValue in rawValues {
+            guard let key = rawValue.first, let value = rawValue.last else { continue }
+            guard let resultValue = Result(rawValue: value) else { continue }
+            tempResults[key] = resultValue
+        }
+        self.results = tempResults
+        super.init(coder: aDecoder)
+    }
+    
+    override func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        let rawValue = self.results.map { [$0.key, $0.value.rawValue] }
+        aCoder.encode(rawValue, forKey: "results")
     }
     
     override func applyTo(gameState: GameState) -> GameState {
         var newGameState = gameState
         newGameState.currentPlayerIndex = nil
-        newGameState.status = .finished(winner: playerIndex)
+        newGameState.status = .finished(results: results)
         return newGameState
     }
 }

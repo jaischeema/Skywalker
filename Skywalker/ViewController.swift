@@ -11,14 +11,12 @@ import GameKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var twoPlayerButton: UIButton!
-    @IBOutlet weak var fourPlayerButton: UIButton!
     
     var match: GameCenterMatch?
     
     var isLoggedIn: Bool = false {
         didSet {
             self.twoPlayerButton.isEnabled = isLoggedIn
-            self.fourPlayerButton.isEnabled = isLoggedIn
         }
     }
     
@@ -37,10 +35,6 @@ class ViewController: UIViewController {
     
     @IBAction func twoPlayerGame() {
         createMatch(players: 2)
-    }
-    
-    @IBAction func fourPlayerGame() {
-        createMatch(players: 4)
     }
     
     func createMatch(players: Int) {

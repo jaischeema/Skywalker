@@ -35,9 +35,10 @@ class GameCenterMatch: Match {
         }
     }
     
-    override func endMatch(winnerIndex: Int) {
+    override func endMatch(withResults results: [Int : Result]) {
         for (index, participant) in (self.turnBasedMatch.participants ?? []).enumerated() {
-            participant.matchOutcome = (index == winnerIndex) ? .won : .lost
+            guard let result = results[index] else { continue }
+            participant.matchOutcome = result.matchOutcome
         }
         self.turnBasedMatch.endMatchInTurn(withMatch: matchData, completionHandler: nil)
     }

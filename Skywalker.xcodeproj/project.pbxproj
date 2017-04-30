@@ -17,6 +17,7 @@
 		202FD9F71EAC4C3F009EBFD9 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202FD9F61EAC4C3F009EBFD9 /* GameViewController.swift */; };
 		202FD9F91EAC5DE7009EBFD9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202FD9F81EAC5DE7009EBFD9 /* Action.swift */; };
 		203FC5001EB5966700D67BDC /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203FC4FF1EB5966700D67BDC /* Player.swift */; };
+		203FC5021EB5A34A00D67BDC /* GameSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203FC5011EB5A34A00D67BDC /* GameSelection.swift */; };
 		205D1A871EAED12300D560BD /* GameCenterMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A861EAED12300D560BD /* GameCenterMatch.swift */; };
 		205D1A891EAED13C00D560BD /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A881EAED13C00D560BD /* Game.swift */; };
 		205D1A8B1EAED17100D560BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D1A8A1EAED17100D560BD /* Extensions.swift */; };
@@ -35,6 +36,7 @@
 		202FD9F61EAC4C3F009EBFD9 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		202FD9F81EAC5DE7009EBFD9 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		203FC4FF1EB5966700D67BDC /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		203FC5011EB5A34A00D67BDC /* GameSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSelection.swift; sourceTree = "<group>"; };
 		205D1A861EAED12300D560BD /* GameCenterMatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterMatch.swift; sourceTree = "<group>"; };
 		205D1A881EAED13C00D560BD /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		205D1A8A1EAED17100D560BD /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				205D1A881EAED13C00D560BD /* Game.swift */,
 				205D1A8A1EAED17100D560BD /* Extensions.swift */,
 				203FC4FF1EB5966700D67BDC /* Player.swift */,
+				203FC5011EB5A34A00D67BDC /* GameSelection.swift */,
 			);
 			path = Skywalker;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				202FD9F71EAC4C3F009EBFD9 /* GameViewController.swift in Sources */,
 				202FD9DE1EAC325D009EBFD9 /* ViewController.swift in Sources */,
 				205D1A891EAED13C00D560BD /* Game.swift in Sources */,
+				203FC5021EB5A34A00D67BDC /* GameSelection.swift in Sources */,
 				205D1A8B1EAED17100D560BD /* Extensions.swift in Sources */,
 				205D1A871EAED12300D560BD /* GameCenterMatch.swift in Sources */,
 				202FD9DC1EAC325D009EBFD9 /* AppDelegate.swift in Sources */,

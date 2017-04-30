@@ -16,6 +16,34 @@ func ActionsFrom(matchData: Data) -> [Action] {
     return actions
 }
 
+enum Result: Int {
+    case won = 1
+    case lost = 2
+    case tie = 3
+    
+    var opposite: Result {
+        switch self {
+        case .won:
+            return .lost
+        case .lost:
+            return .won
+        case .tie:
+            return .tie
+        }
+    }
+    
+    var matchOutcome: GKTurnBasedMatchOutcome {
+        switch self {
+        case .won:
+           return .won
+        case .lost:
+            return .lost
+        case .tie:
+            return .tied
+        }
+    }
+}
+
 class Match {
     let identifier: String
     let localPlayerIdentifier: String
@@ -51,7 +79,7 @@ class Match {
     }
     
     func saveTurn(nextPlayerIndex: Int? = nil) {}
-    func endMatch(winnerIndex: Int) {}
+    func endMatch(withResults results: [Int: Result]) {}
     
     @objc func handleGameEvent(_ notification: Notification) {
         if let action = notification.object as? Action {
@@ -66,8 +94,8 @@ class Match {
                 } else {
                     self.saveTurn()
                 }
-            case let currentAction as SetWinner:
-                self.endMatch(winnerIndex: currentAction.playerIndex)
+            case let currentAction as SetResults:
+                self.endMatch(withResults: currentAction.results)
             default:
                 self.saveTurn()
             }

@@ -23,13 +23,21 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var topPlayerLabel: UILabel!
     @IBOutlet weak var bottomPlayerLabel: UILabel!
-    @IBOutlet weak var leftPlayerLabel: UILabel!
-    @IBOutlet weak var rightPlayerLabel: UILabel!
-    @IBOutlet weak var updatesView: UITextView!
+    @IBOutlet weak var statusLabel: UILabel!
     
     var currentPlayerIsActive: Bool {
         guard let index = self.gameState.currentPlayerIndex else { return false }
         return GKLocalPlayer.localPlayer().playerID == self.game.players[index].identifier
+    }
+    
+    var currentPlayerIndex: Int {
+        for (index, player) in self.game.players.enumerated() {
+            if player.identifier == GKLocalPlayer.localPlayer().playerID {
+                return index
+            }
+        }
+        assert(false, "This should never be triggered")
+        return 0
     }
     
     var allActionButtons: [UIButton] {
@@ -38,33 +46,24 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleGameEvent), name: GameNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleGameEvent),
+                                               name: GameNotificationName,
+                                               object: nil)
     }
     
     func handleGameEvent(_ notification: Notification) {
         if let action = notification.object as? Action {
             self.actions.append(action)
+            self.gameState = action.applyTo(gameState: gameState)
         }
         self.updateView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if self.game.players.count == 2 {
-            self.bottomPlayerLabel.text = self.game.players[0].displayName
-            self.topPlayerLabel.text = self.game.players[1].displayName
-            self.leftPlayerLabel.text = ""
-            self.rightPlayerLabel.text = ""
-        } else if self.game.players.count == 4 {
-            self.bottomPlayerLabel.text = self.game.players[0].displayName
-            self.leftPlayerLabel.text = self.game.players[1].displayName
-            self.leftPlayerLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-            self.leftPlayerLabel.sizeToFit()
-            self.topPlayerLabel.text = self.game.players[2].displayName
-            self.rightPlayerLabel.text = self.game.players[3].displayName
-            self.rightPlayerLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
-            self.rightPlayerLabel.sizeToFit()
-        }
+        self.bottomPlayerLabel.text = self.game.players[0].displayName
+        self.topPlayerLabel.text = self.game.players[1].displayName
         self.updateView()
     }
     
@@ -75,14 +74,40 @@ class GameViewController: UIViewController {
     
     @IBAction func runAction(sender: UIButton) {
         guard currentPlayerIsActive else { return }
-        guard let buttonTitle = sender.currentTitle else { return }
-        guard let gameSelection = GameSelection(rawStringValue: buttonTitle) else { return }
+        guard let gameSelection = GameSelection(rawValue: sender.tag) else { return }
         self.game.add(action: ChoiceAction(timeInterval: Date().timeIntervalSince1970, value: gameSelection))
     }
     
     func updateView() {
-        let text = self.actions.map { $0.description }.joined(separator: "\n")
-        self.updatesView.text = text
         allActionButtons.forEach { $0.isEnabled = currentPlayerIsActive }
+        
+        if let currentSelection = self.gameState.playerChoices[self.currentPlayerIndex] {
+            for button in allActionButtons {
+                guard let selection = GameSelection(rawValue: button.tag) else { continue }
+                if currentSelection == selection {
+                    button.layer.borderColor = UIColor.yellow.cgColor
+                    button.layer.borderWidth = 2.0
+                    button.layer.cornerRadius = rockButton.frame.width / 2.0
+                    button.clipsToBounds = false
+                }
+            }
+        }
+
+        switch self.gameState.status {
+        case .awaitingPlay:
+            self.statusLabel.text = currentPlayerIsActive ? "Your turn!!" : "Waiting for another player :/"
+        case .finished(let results):
+            guard let result = results[currentPlayerIndex] else { return }
+            switch result {
+            case .lost:
+                self.statusLabel.text = "You lost :("
+            case .won:
+                self.statusLabel.text = "You won \\o/"
+            case .tie:
+                self.statusLabel.text = "Oh no! Its a tie :|"
+            }
+        default:
+            self.statusLabel.text = ""
+        }
     }
 }
